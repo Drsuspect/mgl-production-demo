@@ -1,14 +1,18 @@
-# MGL_Production — Demo Showcase
+# MGL Production — Demo Merkezi
 
-MGL_Production üretim yönetimi demonstrasyonları için halka açık yayın deposu.
+Bu depo, MGL Production tanıtım demolarının statik web yayın deposudur.
 
-## Planlanan demolar
+## Demolar
 
-- **Demo 1:** HTML tabanlı proje, iş emri ve sekiz operasyonlu üretim takip ekranı.
-- **Demo 2:** Fabrika üretim simülasyonunun web uyarlaması (hazırlık aşamasında).
+- **Fabrika Akış Simülasyonu V1.1:** [fabrika-simulasyonu/](./fabrika-simulasyonu/) — personel, satın alma, depo, fason ve üretim akışı. **Yüklendi.**
+- **Yeni MGL Production Web Demo:** Kaynak HTML dosyası henüz bu depoda bulunmadığı için açılış ekranında *Yayın hazırlığında* gösterilir.
 
-Bu depo yalnızca tanıtım amaçlı örnek veriler ve web dosyaları içerecektir. Gerçek müşteri, personel veya mali kayıtlar yayımlanmamalıdır.
+## Yayın
 
-## Durum
+Ana giriş: `index.html`. GitHub Pages için **Settings → Pages → Build and deployment → Deploy from a branch → main / (root)** seçeneğini kullanın. Pages etkinleşmeden URL'lerin yayında olduğu iddia edilmemelidir.
 
-GitHub Pages yayını henüz etkinleştirilmedi.
+Muhtemel site adresi: https://drsuspect.github.io/mgl-production-demo/
+
+## Güvenlik ve veri
+
+Tüm bilgiler demo amaçlıdır. Gerçek müşteri, personel veya mali kayıtları bu halka açık depoya koymayın. V1.1 istemci tarafında çalışır; verileri aynı tarayıcıda tutar, kullanıcı hesapları veya gerçek ERP veritabanı ile bağlantı kurmaz.
