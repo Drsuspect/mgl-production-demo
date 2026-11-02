@@ -15,6 +15,20 @@
 @keyframes subcontractReturnTravel{from{left:85%}to{left:8%}}
 @media(max-width:1080px){.transfer-equal{grid-template-columns:1fr}.transfer-equal>.panel{min-height:0}}
 @media(max-width:600px){.transfer-equal .node{min-height:125px}.transfer-equal .actionbar{min-height:0}}
+.operator-compact{max-width:1180px}.operator-entry{display:grid;grid-template-columns:minmax(200px,1.1fr) minmax(180px,.9fr) auto;align-items:end;gap:12px;margin:17px 0 10px}
+.operator-entry .field input,.operator-entry .field select{width:100%;min-height:42px}.operator-entry>button{min-height:42px}
+.operator-status{padding:11px 13px;border:1px solid #2b4966;background:#0c2033;border-radius:10px;margin-bottom:15px;color:#c9e7ff}
+.operator-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.operator-content>div{min-width:0}.operator-route{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:11px 0}
+.operator-step{min-width:0;border:1px solid #34516e;background:#12263d;border-radius:10px;padding:13px 9px;text-align:center;font-size:12px;overflow-wrap:anywhere}
+.operator-step b{display:block;margin:5px 0 2px;font-size:14px}.operator-step.current{border-color:#4cb5e6;background:#193853}
+.operator-step small{font-size:11px}.operator-method{background:#142b42;border:1px solid #33536f;border-radius:11px;padding:14px}
+.operator-method h3{margin:0}.operator-method p{color:#c7d9eb;font-size:13px;line-height:1.6}
+.operator-drawing{font-size:12px;padding-top:8px;border-top:1px solid #36516e;overflow-wrap:anywhere}
+.operator-approval{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-top:1px solid #2c4461;margin-top:18px;padding-top:12px}
+.operator-approval button{min-width:175px}
+@media(max-width:950px){.operator-content{grid-template-columns:1fr}}
+@media(max-width:640px){.operator-entry{grid-template-columns:1fr}.operator-approval button{width:100%}}
 </style></head><body><div class="app"><aside class="sidebar"><div class="brand">MGL<span>_Production</span></div><div class="sub">Manufacturing ERP · DEMO V1.1</div><nav class="nav"><button data-view="dashboard" class="active">◈ Proje Dashboard</button><button data-view="layout">🏭 8 Operasyon Layout</button><button data-view="matrix">▤ Parça / Operasyon Takip</button><button data-view="transfer">⇄ Sevk ve Transfer</button><button data-view="operator">▣ Operatör Paneli</button><button data-view="cost">◷ İşçilik ve Maliyet</button></nav><div class="sideinfo">● Yerel demo · Örnek veriler<br>Proje PRJ-01 · 4 parça · 8 operasyon</div></aside><main class="main"><header class="top"><div><div class="eyebrow">ÜRETİM YÖNETİMİ / PROJE GERÇEKLEŞMESİ</div><h1 id="heading">PRJ-01 · Üretim Kontrol Merkezi</h1><div class="muted">A: 100 · B: 200 · C: 100 · D: 400 adet | Toplam: 800 parça</div></div><div class="filters"><span class="tag">● Çalışan yerel demo</span><label><input type="checkbox" id="reduce"> Hareketleri azalt</label></div></header><section class="metrics" id="metrics"></section><div class="tabs"><button class="active" data-view="dashboard">Genel İlerleme</button><button data-view="layout">Operasyon Hattı</button><button data-view="matrix">Takip Matrisi</button><button data-view="transfer">Transferler</button><button data-view="operator">Operatör</button><button data-view="cost">Maliyet</button></div>
 <section class="view active" id="view-dashboard"><div class="grid2"><div class="panel section"><div class="flex"><h2>📊 Parça Bazlı Proje İlerleme</h2><span class="chip blue">Mamul kabulü = OP-080 tamamlanan</span></div><div id="partProgress"></div><div class="footnote">Mamul ilerleme yüzdesi, nihai kabul edilen parça adedinin ilgili hedefe oranıdır. Operasyon ilerlemesi ayrı olarak standart süreyle ağırlıklandırılır.</div></div><div class="panel section"><h2>⏱ Proje Süre Performansı</h2><div class="colored-grid" id="timecards"></div><div class="field" style="margin-top:17px"><label>Örnek takvim planında beklenen ilerleme (%)</label><div class="rangeline"><input id="schedule" type="range" min="0" max="100" value="52"><strong id="scheduleText">%52</strong></div></div><div class="footnote">Takvim sapması, örnek plan yüzdesi ile standard-süre ağırlıklı tamamlanma karşılaştırmasıdır. Gerçek bitiş tahmini için kapasite ve bağımlılık planlaması gerekir.</div></div></div><section class="panel section"><div class="flex"><h2>Operasyon Bazlı Toplam Proje Gerçekleşmesi</h2><button class="secondary" data-view="matrix">Parça detaylarını gör →</button></div><div class="tablewrap"><table class="ops-table"><thead><tr><th>Operasyon</th><th>Hedef işlem adedi</th><th>İşlenmiş</th><th>İşlemde</th><th>Bekleyen</th><th>Gerçekleşme</th><th>Std. / Gerçek dk-adet</th></tr></thead><tbody id="opTotals"></tbody></table></div><div class="footnote">Bir parça sekiz operasyondan geçtiği için 800 proje parçası × 8 = 6.400 planlı operasyon geçişi bulunur; bu, 6.400 mamul anlamına gelmez.</div></section></section>
 <section class="view" id="view-layout"><div class="panel section"><div class="flex"><h2>🏭 8 İstasyonlu Üretim Layout'u</h2><div class="filters"><label>İzlenen parça</label><select id="layoutPart"></select></div></div><div class="layout" id="layoutGrid"></div><div class="track" aria-live="polite"><div id="routeLabel">Bir sevk seçildiğinde lot hareketi burada izlenir.</div><div class="rail"></div><div class="cargo" id="cargo">📦</div></div></div><div class="grid2"><div class="panel section"><h2>Seçilen Operasyon / Parça Referansları</h2><div id="stationDetails"></div></div><div class="panel section"><h2>Operasyon Devir Kontrolü</h2><div id="operationControls"></div><div class="footnote">Hareketler simülasyon kayıtlarını günceller. Gerçek stok veya ERP veritabanı etkilenmez.</div></div></div></section>
@@ -36,7 +50,21 @@
 <div class="readonly eta-box"><small>HEDEF DÖNÜŞ ZAMANI</small><br><strong id="fasonEtaText">Henüz planlanmadı</strong></div>
 </div></div>
 <div class="panel section transfer-bottom"><h2>🧾 Transfer ve Sevkiyat Durumu</h2><div id="transferKPIs" class="colored-grid"></div><h3 style="margin-top:20px">İşlem geçmişi</h3><div class="log" id="log"></div><div class="footnote">Bu animasyonlar örnek sevk verileriyle çalışır; gerçek stok ve faturalarla bağlantılı değildir. Fason kalite onayı ilgili operasyon ekranında yönetilir.</div></div></section>
-<section class="view" id="view-operator"><div class="grid2"><div class="panel section"><h2>▣ Operatör Paneli · Barkod / Referans</h2><label>İş emri veya parça kodu</label><div class="actionbar" style="margin-top:8px"><input type="text" id="barcode" value="PRJ-01-A" placeholder="Örn: PRJ-01-A"><button id="lookup">Referansı Çağır</button></div><div id="barcodeResult" class="readonly" style="margin:15px 0"></div><div class="method"><small>ÜRETİM METOT KARTI · ÖRNEK DOKÜMAN</small><h3 id="methodTitle">Teknik Operasyon Talimatı</h3><p id="methodBody"></p><p><b>Dikkat:</b> Markalama ve taşlama/yüzey kontrol koşulları sağlanmadan kaplamaya geçilemez.</p><p>Teknik resim referansı: TR-PRJ01-REV-A.pdf (örnek)</p></div><label class="tick"><input type="checkbox" id="readConfirm"> Teknik özellikleri okudum, anladım.</label><button id="callWO" disabled>İş Emrini Çağır</button><div id="woMsg" class="footnote"></div></div><div class="panel section"><h2>Operasyon Geçiş Bağımlılıkları</h2><div id="routeCard"></div><div class="note" style="margin-top:15px">Teknik resim görüntüsü bu örnek demoda referans olarak sunulur; gerçek dosya yükleme, cihaz barkodu ve yetkilendirme entegrasyonu yapılmış değildir.</div></div></div></section>
+<section class="view" id="view-operator"><div class="panel section operator-compact">
+<div class="flex"><div><h2>▣ Operatör Paneli · Dijital Metot</h2><div class="muted">Referansı çağır, metodu incele, iş emrini aç.</div></div><span class="chip blue">PRJ-01 · Demo</span></div>
+<div class="operator-entry">
+<div class="field"><label for="barcode">İş emri / parça barkodu</label><input type="text" id="barcode" value="PRJ-01-A" placeholder="PRJ-01-A" autocomplete="off"></div>
+<div class="field"><label for="operatorOperation">Operasyon</label><select id="operatorOperation"></select></div>
+<button id="lookup">Referansı Çağır</button></div>
+<div id="barcodeResult" class="operator-status" role="status" aria-live="polite"></div>
+<div class="operator-content">
+<div><div class="eyebrow">ONAYLI ROTA ÖRNEĞİ</div><div id="routeCard" class="operator-route"></div>
+<div class="footnote">Önceki ve sonraki operasyon bilgileri demo rotasından otomatik gelir.</div></div>
+<div class="operator-method"><div class="flex"><h3 id="methodTitle">Dijital Metot Kartı</h3><span class="chip">Örnek</span></div><p id="methodBody"></p>
+<div class="operator-drawing">Teknik resim: <b>TR-PRJ01-REV-A.pdf</b> <span class="muted">(örnek referans; dosya bağlı değil)</span></div>
+</div></div>
+<div class="operator-approval"><label class="tick"><input type="checkbox" id="readConfirm"> Metot ve dikkat hususlarını okudum, anladım.</label><button id="callWO" disabled>İş Emrini Çağır →</button></div><div id="woMsg" class="footnote" role="status" aria-live="polite"></div>
+</div></section>
 <section class="view" id="view-cost"><div class="grid2">
 <div class="panel section"><h2>👷 Üretim Personeli ve Brüt Maaşlar</h2>
 <p class="muted">Örnek personel kadrosu. Personel seçimi yapılmaz; eşzamanlı çalışanların tamamı operasyon işçiliğine dahil edilir.</p>
@@ -162,10 +190,27 @@ addLog(s.id+' · '+s.lot+' fason dönüş kalite kontrolü onaylandı; sonraki o
 costRender();
 });
 }
-function operatorRender(){let code=$('barcode').value.trim().toUpperCase();let found=code.match(/^PRJ-01-([ABCD])$/)||code.match(/^([ABCD])$/);let partCode=found?found[1]:null;const op=ops[selectedOp];$('barcodeResult').innerHTML=partCode?`<b>PRJ-01-${partCode}</b> · Hedef ${data[partCode].target} adet · Operasyon ${op[0]} ${op[1]}`:'<span class="warntext">Örnek referans: PRJ-01-A, PRJ-01-B, PRJ-01-C veya PRJ-01-D</span>';$('methodTitle').textContent=op[0]+' · '+op[1];$('methodBody').textContent=`Önceki: ${selectedOp?ops[selectedOp-1][1]:'Rota başlangıcı'} · Mevcut: ${op[1]} · Sonraki: ${selectedOp<7?ops[selectedOp+1][1]:'Mamul Depo'}. Bu operasyonun metot standardı ${op[3]} dk/adet (parça referansına göre uyarlanır).`;$('routeCard').innerHTML=`<div class="node">${selectedOp?ops[selectedOp-1][0]+' · '+ops[selectedOp-1][1]:'Rota başlangıcı'}</div><div class="connecting">↓</div><div class="node" style="border-color:#59b8ff">${op[0]} · ${op[1]}</div><div class="connecting">↓</div><div class="node">${selectedOp<7?ops[selectedOp+1][0]+' · '+ops[selectedOp+1][1]:'Mamul Depo'}</div>`;$('readConfirm').checked=false;$('callWO').disabled=true;$('woMsg').textContent='';return !!partCode}
+function operatorRender(){
+const code=$('barcode').value.trim().toUpperCase();
+const found=code.match(/^PRJ-01-([ABCD])$/)||code.match(/^([ABCD])$/);
+const partCode=found?found[1]:null;
+$('operatorOperation').value=String(selectedOp);
+const op=ops[selectedOp];
+$('barcodeResult').innerHTML=partCode?'<b>PRJ-01-'+partCode+'</b> · '+data[partCode].target+' adet hedef · '+op[0]+' '+esc(op[1]):'<span class="warntext">Geçerli örnek kod: PRJ-01-A, B, C veya D</span>';
+$('methodTitle').textContent=op[0]+' · '+op[1];
+$('methodBody').textContent='Metot standardı: '+op[3]+' dk/adet (parça referansına göre uyarlanır). '+(selectedOp===6?'Kaplama öncesinde yüzey kontrolünün tamamlanmış olması gerekir.':selectedOp===5?'Yüzey ve taşlama kontrolü doğrulanmalıdır.':'İşleme başlamadan önce parça referansı ve operasyon sırası kontrol edilir.');
+const route=[
+selectedOp?{code:ops[selectedOp-1][0],name:ops[selectedOp-1][1],state:'Önceki'}:{code:'—',name:'Rota başlangıcı',state:'Önceki'},
+{code:op[0],name:op[1],state:'Mevcut'},
+selectedOp<ops.length-1?{code:ops[selectedOp+1][0],name:ops[selectedOp+1][1],state:'Sonraki'}:{code:'—',name:'Mamul Depo',state:'Sonraki'}
+];
+$('routeCard').innerHTML=route.map((r,i)=>'<div class="operator-step'+(i===1?' current':'')+'"><small>'+r.state+'</small><b>'+esc(r.code)+'</b>'+esc(r.name)+'</div>').join('');
+$('readConfirm').checked=false;$('callWO').disabled=true;$('woMsg').textContent='';
+return !!partCode;
+}
 function refresh(){renderMetrics();renderDashboard();renderMatrix();renderLayout();transferRender();costRender()}
 function show(view){activeView=view;document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+view));document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===view));$('heading').textContent=({dashboard:'PRJ-01 · Üretim Kontrol Merkezi',layout:'8 Operasyonlu Üretim Layout’u',matrix:'Parça / Operasyon Takip ve Yönetim',transfer:'Depo – Üretim ve Transferler',operator:'Operatör Paneli · Dijital Metot',cost:'Personel ve Üretim Maliyetleri'})[view];if(view==='operator')operatorRender();window.scrollTo({top:0,behavior:document.body.classList.contains('reduce')?'auto':'smooth'})}
-for(const key of Object.keys(data)){for(const id of ['layoutPart','matrixPart']){const e=document.createElement('option');e.value=key;e.textContent=`Parça ${key} · ${data[key].target} adet`;$(id).append(e)}}$('layoutPart').value='A';
+for(let i=0;i<ops.length;i++){const opt=document.createElement('option');opt.value=String(i);opt.textContent=ops[i][0]+' · '+ops[i][1];$('operatorOperation').append(opt)}for(const key of Object.keys(data)){for(const id of ['layoutPart','matrixPart']){const e=document.createElement('option');e.value=key;e.textContent=`Parça ${key} · ${data[key].target} adet`;$(id).append(e)}}$('layoutPart').value='A';
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>show(b.dataset.view));$('layoutPart').onchange=()=>{part=$('layoutPart').value;renderLayout()};$('matrixPart').onchange=renderMatrix;$('schedule').oninput=renderDashboard;$('reduce').onchange=e=>document.body.classList.toggle('reduce',e.target.checked);
 $('warehouseTransfer').onclick=()=>{warehouseIssued+=25;warehouseAccepted+=25;addLog('Depo → Üretim: 25 set için çift onay simülasyonu tamamlandı.');transferRender();animateCargo('depoCargo','25 set · Depo teslim → Üretim kabul onayı');};
 $('subcontractTransfer').onclick=()=>{
@@ -184,6 +229,6 @@ lot.returned=true;
 addLog(lot.id+' · 12 adet fason dönüşü depoya kabul edildi.');
 subcontractAnimation(true,lot.id+' · 12 adet fason tedarikçiden depoya döndü.');
 transferRender();
-};$('lookup').onclick=operatorRender;$('barcode').onkeydown=e=>{if(e.key==='Enter')operatorRender()};$('readConfirm').onchange=e=>$('callWO').disabled=!e.target.checked;$('callWO').onclick=()=>{const v=$('barcode').value.trim().toUpperCase();if(!/^PRJ-01-[ABCD]$/.test(v)||!$('readConfirm').checked)return;part=v.slice(-1);$('layoutPart').value=part;addLog(`${v}: metot kartı okundu/anlaşıldı; iş emri çağrıldı.`);show('layout')};
+};$('lookup').onclick=operatorRender;$('barcode').onkeydown=e=>{if(e.key==='Enter')operatorRender()};$('operatorOperation').onchange=e=>{selectedOp=Number(e.target.value);operatorRender()};$('readConfirm').onchange=e=>$('callWO').disabled=!e.target.checked;$('callWO').onclick=()=>{const v=$('barcode').value.trim().toUpperCase();if(!/^PRJ-01-[ABCD]$/.test(v)||!$('readConfirm').checked)return;part=v.slice(-1);$('layoutPart').value=part;addLog(`${v}: metot kartı okundu/anlaşıldı; iş emri çağrıldı.`);show('layout')};
 addLog('PRJ-01 hazır: A 100, B 200, C 100, D 400 adet. Operasyon matrisi yüklendi.');refresh();operatorRender();
 </script></body></html>
