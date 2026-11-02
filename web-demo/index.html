@@ -7,21 +7,26 @@
 <section class="view" id="view-transfer"><div class="grid2"><div class="panel section"><h2>🚚 Depo → Üretim ve Operasyonlar Arası Transfer</h2><div class="transferrow"><div class="node"><div class="emoji">🏬</div><b>Ham Depo</b><p class="muted">Malzeme / set hazırlığı</p></div><div class="connecting">➜</div><div class="node"><div class="emoji">🏭</div><b>Üretim Hattı</b><p class="muted">OP-010 → OP-080</p></div></div><div class="actionbar"><button id="warehouseTransfer">📦 Depodan 25 set sevkini canlandır</button><button class="secondary" data-view="layout">Operasyonları aç →</button></div><div class="track"><div id="depoTransferLabel">Çift taraflı kabul simülasyonu: sevk → kabul.</div><div class="rail"></div><div class="cargo" id="depoCargo">🚚</div></div></div><div class="panel section"><h2>🧾 Transfer ve Onay Durumu</h2><div id="transferKPIs" class="colored-grid"></div><div class="footnote">Depo set sayıları demo amaçlıdır. Fiilî stok ve BOM tüketim hesapları mevcut veritabanına bağlanmamıştır.</div><h3 style="margin-top:20px">İşlem geçmişi</h3><div class="log" id="log"></div></div></div></section>
 <section class="view" id="view-operator"><div class="grid2"><div class="panel section"><h2>▣ Operatör Paneli · Barkod / Referans</h2><label>İş emri veya parça kodu</label><div class="actionbar" style="margin-top:8px"><input type="text" id="barcode" value="PRJ-01-A" placeholder="Örn: PRJ-01-A"><button id="lookup">Referansı Çağır</button></div><div id="barcodeResult" class="readonly" style="margin:15px 0"></div><div class="method"><small>ÜRETİM METOT KARTI · ÖRNEK DOKÜMAN</small><h3 id="methodTitle">Teknik Operasyon Talimatı</h3><p id="methodBody"></p><p><b>Dikkat:</b> Markalama ve taşlama/yüzey kontrol koşulları sağlanmadan kaplamaya geçilemez.</p><p>Teknik resim referansı: TR-PRJ01-REV-A.pdf (örnek)</p></div><label class="tick"><input type="checkbox" id="readConfirm"> Teknik özellikleri okudum, anladım.</label><button id="callWO" disabled>İş Emrini Çağır</button><div id="woMsg" class="footnote"></div></div><div class="panel section"><h2>Operasyon Geçiş Bağımlılıkları</h2><div id="routeCard"></div><div class="note" style="margin-top:15px">Teknik resim görüntüsü bu örnek demoda referans olarak sunulur; gerçek dosya yükleme, cihaz barkodu ve yetkilendirme entegrasyonu yapılmış değildir.</div></div></div></section>
 <section class="view" id="view-cost"><div class="grid2">
-<div class="panel section"><h2>👷 Üretim Personeli ve Brüt Aylık Maaşlar</h2>
-<p class="muted">Örnek personel listesi • Her çalışanın maliyeti, atandığı operasyonun gerçekleşen süresi üzerinden hesaplanır.</p>
+<div class="panel section"><h2>👷 Üretim Personeli ve Brüt Maaşlar</h2>
+<p class="muted">Örnek personel kadrosu. Personel seçimi yapılmaz; eşzamanlı çalışanların tamamı operasyon işçiliğine dahil edilir.</p>
 <div class="tablewrap"><table class="ops-table"><thead><tr><th>Personel</th><th>Görevi / İstasyon</th><th>Brüt aylık maaş</th></tr></thead><tbody id="personnelRows"></tbody></table></div>
-<div class="footnote">Maaş tutarları demo amaçlıdır. Brüt dakika maliyeti = aylık brüt maaş / 13.500 dakika (225 saat). Aynı operasyonda birlikte çalışan kişilerin süreleri eşzamanlı olarak maliyete dahil edilir. Fiilî personel zaman kaydı bağlantısı henüz yoktur.</div></div>
-<div class="panel section"><h2>💰 Proje Üretim ve Fason Maliyetleri</h2>
-<div class="statbox"><small>Tüm çalışanların gerçekleşen operasyon işçilikleri</small><div class="n" id="allLaborTotal"></div></div>
+<div class="footnote">Brüt dakika bedeli = aylık brüt maaş / 13.500 dakika. Gerçek bordro ve puantaj entegrasyonu bulunmamaktadır.</div></div>
+<div class="panel section"><h2>💰 Proje Birikmiş Maliyet Özeti</h2>
+<div class="statbox"><small>Tüm personelin örnek gerçekleşen operasyon işçilikleri</small><div class="n" id="allLaborTotal"></div></div>
 <div id="costLines" style="margin-top:12px"></div>
-<div class="tablewrap" style="margin-top:16px"><table class="ops-table"><thead><tr><th>Operasyon</th><th>Gerçekleşen süre</th><th>Ekip işçilik maliyeti</th></tr></thead><tbody id="operationLaborRows"></tbody></table></div>
-<div class="two" style="margin-top:16px">
-<div class="field"><label>Fason işçilik (TL)</label><input type="number" id="subCost" min="0" value="2000"></div>
-<div class="field"><label>Fason nakliye (TL)</label><input type="number" id="shipCost" min="0" value="1000"></div>
-<div class="field"><label>Üretim genel gider payı (TL)</label><input type="number" id="overheadCost" min="0" value="1500"></div>
-<div class="field"><label>FIFO malzeme (TL)</label><input type="number" id="materialCost" min="0" value="7500"></div>
-</div><div class="readonly" style="margin-top:14px"><small>TOPLAM ÖRNEK ÜRETİM MALİYETİ</small><br><strong id="costTotal"></strong></div>
-<div class="footnote">Maliyetler demo örnekleridir. Gerçek personel devam kaydı, mola, vardiya, işveren SGK maliyeti ve genel gider dağıtım anahtarı entegrasyonu yapılmamıştır.</div></div></div></section>
+<div class="readonly" style="margin-top:14px"><small>TOPLAM ÖRNEK PROJE MALİYETİ</small><br><strong id="costTotal"></strong></div>
+<div class="footnote">Malzeme, fason ve genel giderler örnek senaryodaki sabit veya fatura bazlı kayıtlardan okunur; bu panelde manuel tutar girişi yoktur. Fason nakliye ayrı gider satırı değil, fason sevk maliyetinin parçasıdır.</div>
+</div></div>
+<div class="panel section"><div class="flex"><h2>🧾 Fason Fatura / Sevkiyat Kayıtları</h2><span class="chip blue">Fason = hizmet faturası + varsa gidiş/dönüş nakliyesi</span></div>
+<p class="muted">Bir proje aynı hizmete birden çok sevkle gidebilir. Her sevk kendi fatura ve taşıma kayıtlarıyla değerlendirilir; tutarlar aynı sevkteki toplam işlenen kilograma dağıtılır. Aşağıdaki kayıtlar örnektir.</p>
+<div class="tablewrap"><table class="ops-table"><thead><tr><th>Sevk / Fatura</th><th>Parça / Lot</th><th>Adet</th><th>kg/adet</th><th>Toplam kg</th><th>Fason faturası</th><th>Gidiş</th><th>Dönüş</th><th>Toplam</th><th>TL/kg</th><th>KK</th></tr></thead><tbody id="fasonInvoiceRows"></tbody></table></div>
+<div class="footnote">Faturalar bu demonstrasyonda örnek kayıt dizisinden çağrılır. Gerçek satın alma faturası, nakliye belgesi, stok lotu ve KK onay sistemine API bağlantısı henüz kurulmadı.</div>
+</div>
+<div class="grid2">
+<div class="panel section"><h2>📦 Fason Çıkış → Dönüş → KK → Sonraki Operasyon</h2><div id="fasonReturnRows"></div>
+<div class="footnote">Fasona çıkıştaki birikmiş birim değer X'tir. Dönüş birim değeri X + (TL/kg × kg/adet) olur. KK onayı olmadan sonraki operasyona sevk edilmez.</div></div>
+<div class="panel section"><h2>📊 Fason & Operasyon Maliyet Dağılımı</h2><div class="tablewrap"><table class="ops-table"><thead><tr><th>Operasyon</th><th>Gerçekleşen süre</th><th>Ekip işçilik maliyeti</th></tr></thead><tbody id="operationLaborRows"></tbody></table></div>
+<div class="footnote">Fason OP-070 sevk ve kalite kabul akışı bu örnekte lot bazlı gösterilir. Operasyon matrisinin simülasyon stoğu ayrı bir örnek veri kümesidir; gerçek maliyet muhasebesi entegrasyonu yoktur.</div></div></div></section>
 <footer class="footnote" style="margin:25px 0">MGL_Production · Bağımsız çevrimdışı Demo V1.1 · Örnek proje verileri ve canlandırılmış sevkler. Yerel ERP kaynak kodu ve veritabanı değiştirilmez. Demo kayıtları sayfa yenilendiğinde sıfırlanır.</footer></main></div><script>
 'use strict';
 const $=id=>document.getElementById(id);const money=n=>new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY'}).format(n);const pct=n=>'%'+(n*100).toLocaleString('tr-TR',{maximumFractionDigits:1});const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -58,23 +63,65 @@ const workers=[
 {code:'P009',name:'Mert Polat',op:3,role:'Kaynak',salary:52000},
 {code:'P010',name:'Gizem Er',op:7,role:'Son Kontrol',salary:47000}
 ];
-function safeCost(id){return Math.max(0,Number($(id).value)||0)}
-function costRender(){
+// Örnek proje belgeleri: Bir sevk için hizmet faturası ve opsiyonel iki yön nakliye.
+// Aynı referans birden çok kez fasona gönderilebilir; fatura sevk bazında ilişkilendirilir.
+const fasonInvoices=[
+{id:'FS-001',invoice:'GAL-2026-101',ref:'A',lot:'A-01',qty:20,kg:1.8,service:1350,outbound:180,returnFreight:120,kk:true},
+{id:'FS-002',invoice:'GAL-2026-118',ref:'A',lot:'A-02',qty:15,kg:1.8,service:1125,outbound:120,returnFreight:105,kk:false},
+{id:'FS-003',invoice:'GAL-2026-126',ref:'B',lot:'B-01',qty:30,kg:2.6,service:3120,outbound:260,returnFreight:220,kk:true},
+{id:'FS-004',invoice:'GAL-2026-131',ref:'C',lot:'C-01',qty:10,kg:0.9,service:405,outbound:0,returnFreight:0,kk:true},
+{id:'FS-005',invoice:'GAL-2026-142',ref:'D',lot:'D-01',qty:40,kg:3.2,service:5760,outbound:450,returnFreight:390,kk:false}
+];
+const exampleMaterialPerPiece=2500; // Demo X birikmiş değerine giriş olarak alınan örnek malzeme değeri.
+const exampleGeneralOverhead=1500; // Demo parametresi; ekrandan düzenlenmez.
+function shipmentTotal(s){return s.service+s.outbound+s.returnFreight}
+function shipmentWeight(s){return s.qty*s.kg}
+function shipmentRate(s){return shipmentTotal(s)/shipmentWeight(s)}
+function laborBreakdown(){
 const times=ops.map((o,i)=>Object.values(data).reduce((sum,p)=>sum+p.actual[i],0));
 const byOp=ops.map((o,i)=>times[i]*workers.filter(p=>p.op===i).reduce((sum,p)=>sum+p.salary/13500,0));
-const totalLabor=byOp.reduce((a,b)=>a+b,0);
+return {times,byOp,total:byOp.reduce((a,b)=>a+b,0)};
+}
+function precedingUnitCost(ref){
+const p=data[ref];const staffing=ops.map((o,i)=>workers.filter(w=>w.op===i).reduce((sum,w)=>sum+w.salary/13500,0));
+let amount=exampleMaterialPerPiece;
+for(let i=0;i<6;i++){
+  // Tamamlanan ilk altı işlem için kişi x gerçekleşen süre bazlı örnek birim maliyet.
+  if(p.done[i]>0)amount+=(p.actual[i]/p.done[i])*staffing[i];
+}
+return amount;
+}
+function costRender(){
+const {times,byOp,total}=laborBreakdown();
 $('personnelRows').innerHTML=workers.map(p=>'<tr><td>'+esc(p.name)+'</td><td>'+esc(p.role)+'</td><td>'+money(p.salary)+'</td></tr>').join('');
-$('allLaborTotal').textContent=money(totalLabor);
+$('allLaborTotal').textContent=money(total);
 $('operationLaborRows').innerHTML=ops.map((o,i)=>'<tr><td>'+esc(o[0]+' '+o[1])+'</td><td>'+times[i].toLocaleString('tr-TR',{maximumFractionDigits:1})+' dk</td><td>'+money(byOp[i])+'</td></tr>').join('');
-const items=[['FIFO malzeme',safeCost('materialCost')],['Tüm personel işçilikleri',totalLabor],['Fason işçilik',safeCost('subCost')],['Fason nakliye',safeCost('shipCost')],['Üretim genel gider payı',safeCost('overheadCost')]];
+const factionTotal=fasonInvoices.reduce((sum,s)=>sum+shipmentTotal(s),0);
+const material=Object.values(data).reduce((sum,p)=>sum+p.target*exampleMaterialPerPiece,0);
+const items=[['Örnek proje malzeme değeri',material],['Tüm personelin operasyon işçiliği',total],['Fason (birim fiyat + transport)',factionTotal],['Örnek dağıtılan genel gider',exampleGeneralOverhead]];
 $('costLines').innerHTML=items.map(([label,value])=>'<div class="cost-line"><span>'+esc(label)+'</span><b>'+money(value)+'</b></div>').join('');
 $('costTotal').textContent=money(items.reduce((sum,item)=>sum+item[1],0));
+$('fasonInvoiceRows').innerHTML=fasonInvoices.map(s=>{
+const weight=shipmentWeight(s),rate=shipmentRate(s);
+return '<tr><td><b>'+esc(s.id)+'</b><div class="tiny">'+esc(s.invoice)+'</div></td><td>'+esc('PRJ-01-'+s.ref+' / '+s.lot)+'</td><td>'+s.qty+'</td><td>'+s.kg.toLocaleString('tr-TR')+'</td><td>'+weight.toLocaleString('tr-TR')+'</td><td>'+money(s.service)+'</td><td>'+money(s.outbound)+'</td><td>'+money(s.returnFreight)+'</td><td><b>'+money(shipmentTotal(s))+'</b></td><td>'+money(rate)+'</td><td>'+(s.kk?'<span class="chip">Onaylı</span>':'<span class="chip warn">Bekliyor</span>')+'</td></tr>';
+}).join('');
+$('fasonReturnRows').innerHTML=fasonInvoices.map(s=>{
+const outgoing=precedingUnitCost(s.ref),coating=s.kg*shipmentRate(s),returned=outgoing+coating;
+return '<div class="statbox" style="margin:9px 0"><div class="flex"><b>'+esc(s.id)+' · '+esc(s.lot)+'</b><span class="chip '+(s.kk?'':'warn')+'">'+(s.kk?'KK onaylandı':'KK bekliyor')+'</span></div><div class="rowinfo"><span>Fasona çıkış (X / adet)</span><strong>'+money(outgoing)+'</strong></div><div class="rowinfo"><span>Fason yükü (TL/kg × kg/adet)</span><strong>'+money(coating)+'</strong></div><div class="rowinfo"><span>Fason dönüş değeri (adet)</span><strong>'+money(returned)+'</strong></div><div class="rowinfo"><span>Sonraki operasyon sevki</span><strong>'+(s.kk?'Serbest':'KK onayına bağlı')+'</strong></div>'+(s.kk?'':'<button class="secondary" data-kk="'+esc(s.id)+'">Örnek KK onayı ver</button>')+'</div>';
+}).join('');
+$('fasonReturnRows').querySelectorAll('[data-kk]').forEach(b=>b.onclick=()=>{
+const s=fasonInvoices.find(x=>x.id===b.dataset.kk);
+if(!s||s.kk)return;
+s.kk=true;
+addLog(s.id+' · '+s.lot+' fason dönüş kalite kontrolü onaylandı; sonraki operasyona sevk serbest.');
+costRender();
+});
 }
 function operatorRender(){let code=$('barcode').value.trim().toUpperCase();let found=code.match(/^PRJ-01-([ABCD])$/)||code.match(/^([ABCD])$/);let partCode=found?found[1]:null;const op=ops[selectedOp];$('barcodeResult').innerHTML=partCode?`<b>PRJ-01-${partCode}</b> · Hedef ${data[partCode].target} adet · Operasyon ${op[0]} ${op[1]}`:'<span class="warntext">Örnek referans: PRJ-01-A, PRJ-01-B, PRJ-01-C veya PRJ-01-D</span>';$('methodTitle').textContent=op[0]+' · '+op[1];$('methodBody').textContent=`Önceki: ${selectedOp?ops[selectedOp-1][1]:'Rota başlangıcı'} · Mevcut: ${op[1]} · Sonraki: ${selectedOp<7?ops[selectedOp+1][1]:'Mamul Depo'}. Bu operasyonun metot standardı ${op[3]} dk/adet (parça referansına göre uyarlanır).`;$('routeCard').innerHTML=`<div class="node">${selectedOp?ops[selectedOp-1][0]+' · '+ops[selectedOp-1][1]:'Rota başlangıcı'}</div><div class="connecting">↓</div><div class="node" style="border-color:#59b8ff">${op[0]} · ${op[1]}</div><div class="connecting">↓</div><div class="node">${selectedOp<7?ops[selectedOp+1][0]+' · '+ops[selectedOp+1][1]:'Mamul Depo'}</div>`;$('readConfirm').checked=false;$('callWO').disabled=true;$('woMsg').textContent='';return !!partCode}
 function refresh(){renderMetrics();renderDashboard();renderMatrix();renderLayout();transferRender();costRender()}
 function show(view){activeView=view;document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+view));document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===view));$('heading').textContent=({dashboard:'PRJ-01 · Üretim Kontrol Merkezi',layout:'8 Operasyonlu Üretim Layout’u',matrix:'Parça / Operasyon Takip ve Yönetim',transfer:'Depo – Üretim ve Transferler',operator:'Operatör Paneli · Dijital Metot',cost:'Personel ve Üretim Maliyetleri'})[view];if(view==='operator')operatorRender();window.scrollTo({top:0,behavior:document.body.classList.contains('reduce')?'auto':'smooth'})}
 for(const key of Object.keys(data)){for(const id of ['layoutPart','matrixPart']){const e=document.createElement('option');e.value=key;e.textContent=`Parça ${key} · ${data[key].target} adet`;$(id).append(e)}}$('layoutPart').value='A';
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>show(b.dataset.view));$('layoutPart').onchange=()=>{part=$('layoutPart').value;renderLayout()};$('matrixPart').onchange=renderMatrix;$('schedule').oninput=renderDashboard;$('reduce').onchange=e=>document.body.classList.toggle('reduce',e.target.checked);
-$('warehouseTransfer').onclick=()=>{warehouseIssued+=25;warehouseAccepted+=25;addLog('Depo → Üretim: 25 set için çift onay simülasyonu tamamlandı.');transferRender();animateCargo('depoCargo','25 set · Depo teslim → Üretim kabul onayı');};$('lookup').onclick=operatorRender;$('barcode').onkeydown=e=>{if(e.key==='Enter')operatorRender()};$('readConfirm').onchange=e=>$('callWO').disabled=!e.target.checked;$('callWO').onclick=()=>{const v=$('barcode').value.trim().toUpperCase();if(!/^PRJ-01-[ABCD]$/.test(v)||!$('readConfirm').checked)return;part=v.slice(-1);$('layoutPart').value=part;addLog(`${v}: metot kartı okundu/anlaşıldı; iş emri çağrıldı.`);show('layout')};['subCost','shipCost','overheadCost','materialCost'].forEach(id=>$(id).addEventListener('input',costRender));
+$('warehouseTransfer').onclick=()=>{warehouseIssued+=25;warehouseAccepted+=25;addLog('Depo → Üretim: 25 set için çift onay simülasyonu tamamlandı.');transferRender();animateCargo('depoCargo','25 set · Depo teslim → Üretim kabul onayı');};$('lookup').onclick=operatorRender;$('barcode').onkeydown=e=>{if(e.key==='Enter')operatorRender()};$('readConfirm').onchange=e=>$('callWO').disabled=!e.target.checked;$('callWO').onclick=()=>{const v=$('barcode').value.trim().toUpperCase();if(!/^PRJ-01-[ABCD]$/.test(v)||!$('readConfirm').checked)return;part=v.slice(-1);$('layoutPart').value=part;addLog(`${v}: metot kartı okundu/anlaşıldı; iş emri çağrıldı.`);show('layout')};
 addLog('PRJ-01 hazır: A 100, B 200, C 100, D 400 adet. Operasyon matrisi yüklendi.');refresh();operatorRender();
 </script></body></html>
