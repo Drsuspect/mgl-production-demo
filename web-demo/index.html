@@ -29,7 +29,39 @@
 .operator-approval button{min-width:175px}
 @media(max-width:950px){.operator-content{grid-template-columns:1fr}}
 @media(max-width:640px){.operator-entry{grid-template-columns:1fr}.operator-approval button{width:100%}}
-</style></head><body><div class="app"><aside class="sidebar"><div class="brand">MGL<span>_Production</span></div><div class="sub">Manufacturing ERP · DEMO V1.1</div><nav class="nav"><button data-view="dashboard" class="active">◈ Proje Dashboard</button><button data-view="layout">🏭 8 Operasyon Layout</button><button data-view="matrix">▤ Parça / Operasyon Takip</button><button data-view="transfer">⇄ Sevk ve Transfer</button><button data-view="operator">▣ Operatör Paneli</button><button data-view="cost">◷ İşçilik ve Maliyet</button></nav><div class="sideinfo">● Yerel demo · Örnek veriler<br>Proje PRJ-01 · 4 parça · 8 operasyon</div></aside><main class="main"><header class="top"><div><div class="eyebrow">ÜRETİM YÖNETİMİ / PROJE GERÇEKLEŞMESİ</div><h1 id="heading">PRJ-01 · Üretim Kontrol Merkezi</h1><div class="muted">A: 100 · B: 200 · C: 100 · D: 400 adet | Toplam: 800 parça</div></div><div class="filters"><span class="tag">● Çalışan yerel demo</span><label><input type="checkbox" id="reduce"> Hareketleri azalt</label></div></header><section class="metrics" id="metrics"></section><div class="tabs"><button class="active" data-view="dashboard">Genel İlerleme</button><button data-view="layout">Operasyon Hattı</button><button data-view="matrix">Takip Matrisi</button><button data-view="transfer">Transferler</button><button data-view="operator">Operatör</button><button data-view="cost">Maliyet</button></div>
+
+/* MGL kurumsal açık/koyu tema */
+:root[data-theme="light"]{color-scheme:light;--bg:#f3f6fb;--panel:#fff;--panel2:#eaf1f8;--line:#d6e0eb;--muted:#52677e;--text:#172a43;--blue:#145fab;--green:#147960;--amber:#965900;--red:#af364a;--purple:#654bad;--teal:#087f88}
+[data-theme="light"] body{background:radial-gradient(ellipse 800px 500px at 52% -10%,#dce9fb 0%,#f5f8fd 65%,#edf2f9 100%);color:var(--text)}
+[data-theme="light"] .sidebar{background:#e9f0f9;border-right-color:var(--line)}
+[data-theme="light"] .brand{color:#19354f}
+[data-theme="light"] .sub,[data-theme="light"] .sideinfo,[data-theme="light"] .muted,[data-theme="light"] small{color:#52677e}
+[data-theme="light"] .nav button{color:#2a455e}
+[data-theme="light"] .nav button.active{background:#d7e8fa;color:#124f86;border-color:#9dc4e8}
+[data-theme="light"] .nav button:hover{background:#e0ebf6}
+[data-theme="light"] .panel,[data-theme="light"] .metric{background:linear-gradient(145deg,#fff,#f6f9fd);box-shadow:0 10px 24px #24426012}
+[data-theme="light"] .station,[data-theme="light"] .node,[data-theme="light"] .operator-step{background:#edf4fb;border-color:#b9cde0;color:#20394f}
+[data-theme="light"] .operator-step.current{background:#d9ecfb;border-color:#3682b9}
+[data-theme="light"] .operator-method,[data-theme="light"] .readonly,[data-theme="light"] .operator-status,[data-theme="light"] .statbox{background:#f1f6fc;color:#20394f;border-color:#c7d8e9}
+[data-theme="light"] .operator-method p,[data-theme="light"] .operator-drawing,[data-theme="light"] .operator-step small{color:#445e76}
+[data-theme="light"] select,[data-theme="light"] input[type=number],[data-theme="light"] input[type=text]{background:#fff;color:#18354e;border-color:#b8cadb}
+[data-theme="light"] label{color:#344e66}
+[data-theme="light"] .secondary,[data-theme="light"] .tabs button{background:#e2edf8;color:#194667;border-color:#a9c3de}
+[data-theme="light"] .tabs button.active{background:#2269a3;color:#fff}
+[data-theme="light"] .tag,[data-theme="light"] .chip{background:#dcefeb;color:#0c675a;border-color:#9bcabd}
+[data-theme="light"] .chip.blue{background:#dceeff;color:#1d5f9b;border-color:#a1c6e9}
+[data-theme="light"] .chip.warn{background:#fff0d9;color:#895200;border-color:#e3c28d}
+[data-theme="light"] .chip.red{background:#fbe7ec;color:#9a3447;border-color:#e7b6c2}
+[data-theme="light"] .footnote,[data-theme="light"] .eyebrow{color:#477393}
+[data-theme="light"] .tablewrap table,[data-theme="light"] .cost-line{color:#223b54}
+[data-theme="light"] th{background:#e6eff9;color:#274960}
+[data-theme="light"] td{border-bottom-color:#dce5ef}
+[data-theme="light"] .note{background:#fff2dc;color:#7b530b}
+[data-theme="light"] .track{background:#edf4fb;border-color:#cadbe9}
+[data-theme="light"] .pbar{background:#dbe5ef}
+.theme-picker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--muted)}
+.theme-picker select{min-width:115px;padding:7px 9px}
+</style></head><body><div class="app"><aside class="sidebar"><div class="brand">MGL<span>_Production</span></div><div class="sub">Manufacturing ERP · DEMO V1.1</div><nav class="nav"><button data-view="dashboard" class="active">◈ Proje Dashboard</button><button data-view="layout">🏭 8 Operasyon Layout</button><button data-view="matrix">▤ Parça / Operasyon Takip</button><button data-view="transfer">⇄ Sevk ve Transfer</button><button data-view="operator">▣ Operatör Paneli</button><button data-view="cost">◷ İşçilik ve Maliyet</button></nav><div class="sideinfo">● Yerel demo · Örnek veriler<br>Proje PRJ-01 · 4 parça · 8 operasyon</div></aside><main class="main"><header class="top"><div><div class="eyebrow">ÜRETİM YÖNETİMİ / PROJE GERÇEKLEŞMESİ</div><h1 id="heading">PRJ-01 · Üretim Kontrol Merkezi</h1><div class="muted">A: 100 · B: 200 · C: 100 · D: 400 adet | Toplam: 800 parça</div></div><div class="filters"><label class="theme-picker" for="mglThemeSelect">◐ Tema <select id="mglThemeSelect" aria-label="Görünüm teması seçimi"><option value="dark">Koyu</option><option value="light">Açık</option></select></label><span class="tag">● Çalışan yerel demo</span><label><input type="checkbox" id="reduce"> Hareketleri azalt</label></div></header><section class="metrics" id="metrics"></section><div class="tabs"><button class="active" data-view="dashboard">Genel İlerleme</button><button data-view="layout">Operasyon Hattı</button><button data-view="matrix">Takip Matrisi</button><button data-view="transfer">Transferler</button><button data-view="operator">Operatör</button><button data-view="cost">Maliyet</button></div>
 <section class="view active" id="view-dashboard"><div class="grid2"><div class="panel section"><div class="flex"><h2>📊 Parça Bazlı Proje İlerleme</h2><span class="chip blue">Mamul kabulü = OP-080 tamamlanan</span></div><div id="partProgress"></div><div class="footnote">Mamul ilerleme yüzdesi, nihai kabul edilen parça adedinin ilgili hedefe oranıdır. Operasyon ilerlemesi ayrı olarak standart süreyle ağırlıklandırılır.</div></div><div class="panel section"><h2>⏱ Proje Süre Performansı</h2><div class="colored-grid" id="timecards"></div><div class="field" style="margin-top:17px"><label>Örnek takvim planında beklenen ilerleme (%)</label><div class="rangeline"><input id="schedule" type="range" min="0" max="100" value="52"><strong id="scheduleText">%52</strong></div></div><div class="footnote">Takvim sapması, örnek plan yüzdesi ile standard-süre ağırlıklı tamamlanma karşılaştırmasıdır. Gerçek bitiş tahmini için kapasite ve bağımlılık planlaması gerekir.</div></div></div><section class="panel section"><div class="flex"><h2>Operasyon Bazlı Toplam Proje Gerçekleşmesi</h2><button class="secondary" data-view="matrix">Parça detaylarını gör →</button></div><div class="tablewrap"><table class="ops-table"><thead><tr><th>Operasyon</th><th>Hedef işlem adedi</th><th>İşlenmiş</th><th>İşlemde</th><th>Bekleyen</th><th>Gerçekleşme</th><th>Std. / Gerçek dk-adet</th></tr></thead><tbody id="opTotals"></tbody></table></div><div class="footnote">Bir parça sekiz operasyondan geçtiği için 800 proje parçası × 8 = 6.400 planlı operasyon geçişi bulunur; bu, 6.400 mamul anlamına gelmez.</div></section></section>
 <section class="view" id="view-layout"><div class="panel section"><div class="flex"><h2>🏭 8 İstasyonlu Üretim Layout'u</h2><div class="filters"><label>İzlenen parça</label><select id="layoutPart"></select></div></div><div class="layout" id="layoutGrid"></div><div class="track" aria-live="polite"><div id="routeLabel">Bir sevk seçildiğinde lot hareketi burada izlenir.</div><div class="rail"></div><div class="cargo" id="cargo">📦</div></div></div><div class="grid2"><div class="panel section"><h2>Seçilen Operasyon / Parça Referansları</h2><div id="stationDetails"></div></div><div class="panel section"><h2>Operasyon Devir Kontrolü</h2><div id="operationControls"></div><div class="footnote">Hareketler simülasyon kayıtlarını günceller. Gerçek stok veya ERP veritabanı etkilenmez.</div></div></div></section>
 <section class="view" id="view-matrix"><div class="panel section"><div class="flex"><h2>📋 PRJ-01 · Parça / Operasyon Yönetim Matrisi</h2><div class="filters"><label>Parça seç</label><select id="matrixPart"><option value="all">Tüm parçalar</option></select></div></div><div class="legend"><span><i class="dot" style="background:var(--amber)"></i>Bekleyen</span><span><i class="dot" style="background:var(--blue)"></i>İşlemde</span><span><i class="dot" style="background:var(--green)"></i>İşlenmiş</span></div><div class="tablewrap" style="margin-top:12px"><table class="matrix"><thead id="matrixHead"></thead><tbody id="matrixBody"></tbody></table></div><div class="footnote">Bekleyen = parça hedefi − o operasyonda işlenmiş − işlemde. Bunun yalnızca “hazır” bölümü önceki operasyondan çıkışı tamamlamış durumdadır. Aynı parça farklı operasyonların bekleyen hanesinde bulunabilir; bu değerler toplanarak fiziksel stok hesaplanmaz.</div></div></section>
@@ -231,4 +263,20 @@ subcontractAnimation(true,lot.id+' · 12 adet fason tedarikçiden depoya döndü
 transferRender();
 };$('lookup').onclick=operatorRender;$('barcode').onkeydown=e=>{if(e.key==='Enter')operatorRender()};$('operatorOperation').onchange=e=>{selectedOp=Number(e.target.value);operatorRender()};$('readConfirm').onchange=e=>$('callWO').disabled=!e.target.checked;$('callWO').onclick=()=>{const v=$('barcode').value.trim().toUpperCase();if(!/^PRJ-01-[ABCD]$/.test(v)||!$('readConfirm').checked)return;part=v.slice(-1);$('layoutPart').value=part;addLog(`${v}: metot kartı okundu/anlaşıldı; iş emri çağrıldı.`);show('layout')};
 addLog('PRJ-01 hazır: A 100, B 200, C 100, D 400 adet. Operasyon matrisi yüklendi.');refresh();operatorRender();
+
+// Tema seçimi üretim verilerinden bağımsız olarak tarayıcıda korunur.
+(function(){
+ const key='mgl-production-theme';
+ const picker=document.getElementById('mglThemeSelect');
+ let saved='dark';
+ try{saved=localStorage.getItem(key)||'dark'}catch(_){}
+ const initial=saved==='light'?'light':'dark';
+ document.documentElement.dataset.theme=initial;
+ picker.value=initial;
+ picker.addEventListener('change',()=>{
+  const theme=picker.value==='light'?'light':'dark';
+  document.documentElement.dataset.theme=theme;
+  try{localStorage.setItem(key,theme)}catch(_){}
+ });
+})();
 </script></body></html>
