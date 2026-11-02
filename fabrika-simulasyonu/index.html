@@ -30,7 +30,34 @@ td,th{padding:7px 8px}.footer{margin-top:14px}
 @media(max-width:860px){.aside{width:150px}.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.two,.three{grid-template-columns:1fr}.three>.panel:last-child{grid-column:auto}.main{padding:12px}}
 @media(max-width:700px){.layout{display:block}.aside{width:100%;height:auto;position:static;overflow:visible;padding:10px}.aside nav{display:flex;overflow-x:auto;gap:4px;margin-top:8px}.aside nav button{flex:0 0 auto;white-space:nowrap}.aside>p{display:none}.main{padding:10px}.top{align-items:flex-start}.top .actions{width:100%}.top .actions button{padding:7px 9px}.flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.station{padding:7px}.station h3{margin:-7px -7px 7px}.station .controls{grid-template-columns:1fr}.station .controls button:last-child{grid-column:auto}.station .controls button{font-size:11px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi .num{font-size:18px}}
 @media(max-width:400px){.flow{grid-template-columns:1fr}.station .controls{grid-template-columns:repeat(2,minmax(0,1fr))}.station .controls select,.station .controls button:last-child{grid-column:1/-1}.kpi .num{font-size:16px}}
-</style></head><body><div class="layout"><aside class="aside"><div class="brand"><b>M</b>MGL Production</div><div class="small">Fabrika Akış Simülasyonu • Web V1.2</div><nav id="nav"></nav><p class="small">Yerel demo • Veriler yalnızca bu tarayıcıda saklanır.</p></aside><main class="main"><div class="top"><div><div class="eyebrow">Üretim kontrol merkezi</div><h1 id="pageTitle">Genel Görünüm</h1><div class="small">DEMO-001 • P101–P106 • altı parça referansı</div></div><div class="actions"><span id="runBadge" class="status" role="status">Hazır</span><button onclick="exportJSON()">JSON dışa aktar</button><button onclick="document.getElementById('importFile').click()">İçe aktar</button><input type="file" id="importFile" accept="application/json" hidden></div></div><div id="kpis" class="grid kpis"></div><div id="personel" class="page"></div><div id="satinalma" class="page"></div><div id="depo" class="page"></div><div id="fason" class="page"></div><div id="uretim" class="page"></div><div class="footer">MGL Production • Tarayıcı simülasyonu. Finansal ve süre göstergeleri temsilî demo değerleridir; gerçek ERP kayıtları değildir.</div></main></div><script>
+
+/* MGL kurumsal açık/koyu tema */
+:root[data-theme="light"]{color-scheme:light;--bg:#f3f7fb;--panel:#fff;--panel2:#e9f1f8;--line:#d3e0eb;--txt:#19344b;--muted:#526d83;--teal:#087e79;--blue:#17629d;--yellow:#966012;--red:#a33b4a}
+[data-theme="light"] body{background:#f2f6fb;color:var(--txt)}
+[data-theme="light"] .aside{background:#e7f0f8;border-color:var(--line)}
+[data-theme="light"] .aside nav button{color:#28445b}
+[data-theme="light"] .aside nav button.active{background:#d5ebe9;color:#12645e;border-left-color:var(--teal)}
+[data-theme="light"] .panel{background:#fff;box-shadow:0 8px 22px #2545640e}
+[data-theme="light"] .station{background:#edf4fa;border-color:#b7cddd;color:#24435a}
+[data-theme="light"] .station h3{background:#dbe8f4}
+[data-theme="light"] th{background:#e3edf7;color:#2d516b}
+[data-theme="light"] td,[data-theme="light"] th{border-bottom-color:#d4e2ec}
+[data-theme="light"] tr:hover td{background:#edf4fb}
+[data-theme="light"] .metric{border-bottom-color:#d9e5ef}
+[data-theme="light"] .status{background:#dff2eb;color:#14685c;border-color:#a1d2c6}
+[data-theme="light"] .pill{color:#45677d}
+[data-theme="light"] .counts,[data-theme="light"] .small,[data-theme="light"] p{color:#536f85}
+[data-theme="light"] .field label{color:#3f6077}
+[data-theme="light"] input,[data-theme="light"] select{background:#fff;color:#17364e;border-color:#b4cada}
+[data-theme="light"] button{background:#dfeaf5;color:#22435d;border-color:#b5cada}
+[data-theme="light"] button.primary{background:#087e79;color:#fff;border-color:#087e79}
+[data-theme="light"] button.warn{background:#f7e5ca;color:#81500c}
+[data-theme="light"] button.danger{background:#f7e0e4;color:#8d2b3a}
+[data-theme="light"] .progress{background:#d8e6f0}
+[data-theme="light"] .toast{background:#fff;color:#183c54;border-color:#90c4d4;box-shadow:0 10px 24px #1f40502b}
+.theme-picker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--muted)}
+.theme-picker select{width:auto;min-width:115px;background:var(--panel);color:var(--txt);border:1px solid var(--line);padding:7px 9px;border-radius:9px}
+</style></head><body><div class="layout"><aside class="aside"><div class="brand"><b>M</b>MGL Production</div><div class="small">Fabrika Akış Simülasyonu • Web V1.2</div><nav id="nav"></nav><p class="small">Yerel demo • Veriler yalnızca bu tarayıcıda saklanır.</p></aside><main class="main"><div class="top"><div><div class="eyebrow">Üretim kontrol merkezi</div><h1 id="pageTitle">Genel Görünüm</h1><div class="small">DEMO-001 • P101–P106 • altı parça referansı</div></div><div class="actions"><label class="theme-picker" for="mglThemeSelect">◐ Tema <select id="mglThemeSelect" aria-label="Görünüm teması seçimi"><option value="dark">Koyu</option><option value="light">Açık</option></select></label><span id="runBadge" class="status" role="status">Hazır</span><button onclick="exportJSON()">JSON dışa aktar</button><button onclick="document.getElementById('importFile').click()">İçe aktar</button><input type="file" id="importFile" accept="application/json" hidden></div></div><div id="kpis" class="grid kpis"></div><div id="personel" class="page"></div><div id="satinalma" class="page"></div><div id="depo" class="page"></div><div id="fason" class="page"></div><div id="uretim" class="page"></div><div class="footer">MGL Production • Tarayıcı simülasyonu. Finansal ve süre göstergeleri temsilî demo değerleridir; gerçek ERP kayıtları değildir.</div></main></div><script>
 'use strict';
 const REFS=['P101','P102','P103','P104','P105','P106'],STATIONS=['Markalama','Çapak Alma','Kaynak Grubu','Fason Hizmetler','Montaj & Paket'],SERVICES=['Lazer kesim','Galvaniz kaplama','Elektrogalvaniz','Boya'],UNITS=['TL/ton','TL/kg','TL/adet','TL/m²','TL/metre','TL/proje'];
 const STAFF=[['Taşlama 1',1,30000],['Taşlama 2',1,32000],['Markalama',1,32000],['Çatım',2,40000],['Kaynak',2,55000],['Montaj',3,40000],['Paketleme',3,35000],['Ham depo',2,32000]];
@@ -100,4 +127,20 @@ function exportJSON(){let blob=new Blob([JSON.stringify({...state,run:false},nul
 // First-run purchase receipts are represented in the movement history.
 if(!state.movements.length&&!started()){for(let o of state.orders)if(o.teslim)mv('Sipariş teslim girişi',o.tedarikci,'Hammadde depo',o.urun,o.teslim,o.birim_fiyat,o.no);save()}
 render();
+
+// Tema seçimi üretim verilerinden bağımsız olarak tarayıcıda korunur.
+(function(){
+ const key='mgl-production-theme';
+ const picker=document.getElementById('mglThemeSelect');
+ let saved='dark';
+ try{saved=localStorage.getItem(key)||'dark'}catch(_){}
+ const initial=saved==='light'?'light':'dark';
+ document.documentElement.dataset.theme=initial;
+ picker.value=initial;
+ picker.addEventListener('change',()=>{
+  const theme=picker.value==='light'?'light':'dark';
+  document.documentElement.dataset.theme=theme;
+  try{localStorage.setItem(key,theme)}catch(_){}
+ });
+})();
 </script></body></html>
