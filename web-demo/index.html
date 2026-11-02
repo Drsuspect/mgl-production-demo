@@ -172,6 +172,14 @@ const out={};for(const [key,base] of Object.entries(config)){
  out[key]={target,done,processing,factor,actual:ops.map((op,i)=>done[i]*op[3]*factor*(1+((i%4)-1)*.06))};
 }return out;
 }
+function buildNearCompleteData(targets){
+const fractions=[.99,.97,.95,.93,.91,.89,.87,.85],out={};
+for(const [key,base] of Object.entries(config)){
+const target=targets[key],done=fractions.map(v=>Math.round(target*v));
+const processing=done.map((v,i)=>i===0?Math.min(1,target-v):Math.min(1,done[i-1]-v));
+out[key]={target,done,processing,factor:base.factor,actual:ops.map((o,i)=>done[i]*o[3]*base.factor*(1+((i%4)-1)*.06))};
+}return out;
+}
 const baseInvoices=[
 {id:'FS-001',invoice:'GAL-2026-101',ref:'A',lot:'A-01',qty:20,kg:1.8,service:1350,outbound:180,returnFreight:120,kk:true},
 {id:'FS-002',invoice:'GAL-2026-118',ref:'A',lot:'A-02',qty:15,kg:1.8,service:1125,outbound:120,returnFreight:105,kk:false},
@@ -182,7 +190,7 @@ const baseInvoices=[
 const projects=[
 {id:'PRJ-01',name:'Çelik Konstrüksiyon',customer:'Örnek müşteri A',status:'Üretimde',data:buildProjectData({A:100,B:200,C:100,D:400},1),invoices:baseInvoices.map(x=>({...x})),issued:60,accepted:60,lots:[],logs:[]},
 {id:'PRJ-02',name:'Makine Parçaları',customer:'Örnek müşteri B',status:'Üretimde',data:buildProjectData({A:75,B:150,C:120,D:180},.66),invoices:baseInvoices.slice(0,3).map((x,i)=>({...x,id:'FS-2'+String(i+1).padStart(2,'0'),invoice:'GAL-2026-2'+String(i+1).padStart(2,'0'),qty:Math.min(x.qty,12+i*4)})),issued:42,accepted:40,lots:[],logs:[]},
-{id:'PRJ-03',name:'Endüstriyel Şase',customer:'Örnek müşteri C',status:'Son aşama',data:buildProjectData({A:60,B:120,C:80,D:240},1.17),invoices:baseInvoices.slice(1,5).map((x,i)=>({...x,id:'FS-3'+String(i+1).padStart(2,'0'),invoice:'GAL-2026-3'+String(i+1).padStart(2,'0'),qty:Math.min(x.qty,18+i*3)})),issued:90,accepted:90,lots:[],logs:[]}
+{id:'PRJ-03',name:'Endüstriyel Şase',customer:'Örnek müşteri C',status:'Son aşama',data:buildNearCompleteData({A:60,B:120,C:80,D:240}),invoices:baseInvoices.slice(1,5).map((x,i)=>({...x,id:'FS-3'+String(i+1).padStart(2,'0'),invoice:'GAL-2026-3'+String(i+1).padStart(2,'0'),qty:Math.min(x.qty,18+i*3)})),issued:90,accepted:90,lots:[],logs:[]}
 ];
 let activeProject=projects[0],data=activeProject.data,fasonInvoices=activeProject.invoices;
 let selectedOp=3,part='A',activeView='overview',busy=false,warehouseIssued=activeProject.issued,warehouseAccepted=activeProject.accepted,subcontractLots=activeProject.lots,events=activeProject.logs,animationTimer=null;
